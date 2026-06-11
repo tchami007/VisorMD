@@ -1,13 +1,20 @@
 import styles from './styles.css';
+import katexCss from 'katex/dist/katex.min.css';
 import markdownit from 'markdown-it';
 import taskLists from 'markdown-it-task-lists';
 import footnote from 'markdown-it-footnote';
+import texmath from 'markdown-it-texmath';
 import mermaid from 'mermaid';
 import hljs from 'highlight.js';
+import katex from 'katex';
 
 const style = document.createElement('style');
 style.textContent = styles;
 document.head.appendChild(style);
+
+const katexStyle = document.createElement('style');
+katexStyle.textContent = katexCss;
+document.head.appendChild(katexStyle);
 
 mermaid.initialize({
   startOnLoad: false,
@@ -22,7 +29,6 @@ const md = markdownit({
   breaks: true,
   highlight: (str, lang) => {
     if (lang === 'mermaid') return '';
-    if (lang === 'math' || lang === 'latex') return '';
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value}</code></pre>`;
@@ -34,6 +40,7 @@ const md = markdownit({
 
 md.use(taskLists, { enabled: true, label: true, labelAfter: true });
 md.use(footnote);
+md.use(texmath, { engine: katex, delimiters: 'dollars', katexOptions: { throwOnError: false } });
 const preview = document.getElementById('preview');
 const welcome = document.getElementById('welcome');
 const toc = document.getElementById('toc');

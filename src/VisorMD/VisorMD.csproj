@@ -15,6 +15,7 @@
   <ItemGroup>
     <EmbeddedResource Include="wwwroot\index.html" LogicalName="VisorMD.wwwroot.index.html" />
     <EmbeddedResource Include="wwwroot\dist\bundle.js" LogicalName="VisorMD.wwwroot.dist:bundle.js" />
+    <EmbeddedResource Include="wwwroot\fonts\*.woff2" LogicalName="VisorMD.wwwroot.fonts.%(Filename)%(Extension)" />
   </ItemGroup>
 
 </Project>
