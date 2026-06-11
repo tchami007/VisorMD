@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using Photino.NET;
 
@@ -7,8 +8,17 @@ namespace VisorMD;
 
 class Program
 {
+    static readonly HashSet<string> ValidThemes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "light", "dark", "sepia", "dracula", "highcontrast", "ocean", "matrix", "starwars"
+    };
+
+    [DllImport("kernel32.dll")]
+    static extern bool FreeConsole();
+
     static string? s_wwwrootPath;
     static string? s_pendingFile;
+    static string? s_pendingTheme;
     static string s_logPath = Path.Combine(Path.GetTempPath(), "VisorMD.log");
 
     static void Log(string msg)
@@ -21,11 +31,55 @@ class Program
     {
         File.WriteAllText(s_logPath, $"=== VisorMD started {DateTime.Now} ===\n");
         Log($"Args: {string.Join(", ", args)}");
+
+        // Parse CLI arguments
+        var positional = new List<string>();
+        for (int i = 0; i < args.Length; i++)
+        {
+            switch (args[i])
+            {
+                case "--theme":
+                    if (i + 1 < args.Length)
+                    {
+                        i++;
+                        s_pendingTheme = args[i].ToLowerInvariant();
+                        if (!ValidThemes.Contains(s_pendingTheme))
+                        {
+                            Console.Error.WriteLine($"Error: tema desconocido '{s_pendingTheme}'.");
+                            Console.Error.WriteLine($"Temas validos: {string.Join(", ", ValidThemes)}");
+                            Environment.Exit(1);
+                        }
+                    }
+                    else
+                    {
+                        Console.Error.WriteLine("Error: --theme requiere un nombre de tema.");
+                        Environment.Exit(1);
+                    }
+                    break;
+
+                default:
+                    if (!args[i].StartsWith("--"))
+                        positional.Add(args[i]);
+                    break;
+            }
+        }
+
+        if (positional.Count > 0)
+        {
+            s_pendingFile = positional[0];
+            if (!File.Exists(s_pendingFile))
+            {
+                Console.Error.WriteLine($"Error: archivo no encontrado: {s_pendingFile}");
+                Environment.Exit(1);
+            }
+        }
+
         s_wwwrootPath = ExtractWwwroot();
-        s_pendingFile = args.Length > 0 ? args[0] : null;
 
         var fileService = new FileService();
         var fileWatcher = new FileWatcher();
+
+        FreeConsole();
 
         PhotinoWindow? window = null;
         window = new PhotinoWindow()
@@ -46,10 +100,18 @@ class Program
                 switch (type)
                 {
                     case "app-ready":
+                        if (s_pendingTheme != null)
+                        {
+                            var themeMsg = JsonSerializer.Serialize(
+                                new SetThemeMessage { Theme = s_pendingTheme },
+                                AppJsonContext.Default.SetThemeMessage);
+                            w.SendWebMessage(themeMsg);
+                            s_pendingTheme = null;
+                        }
                         if (s_pendingFile != null && File.Exists(s_pendingFile))
                         {
                             var fullPath = Path.GetFullPath(s_pendingFile);
-                            Console.Error.WriteLine($"Opening pending file: {fullPath}");
+                            Log($"Opening pending file: {fullPath}");
                             OpenFile(w, fileService, fileWatcher, fullPath);
                             s_pendingFile = null;
                         }

@@ -32,6 +32,78 @@
   --code-bg: #2d2d2d;
 }
 
+[data-theme="sepia"] {
+  --bg: #fbf0d9;
+  --bg-secondary: #efe5cc;
+  --bg-tertiary: #e0d4ba;
+  --text: #5b4636;
+  --text-secondary: #8a7b6b;
+  --border: #d4c5a9;
+  --accent: #8b4513;
+  --accent-hover: #a0522d;
+  --code-bg: #f5ead0;
+}
+
+[data-theme="dracula"] {
+  --bg: #282a36;
+  --bg-secondary: #2c2e3e;
+  --bg-tertiary: #3c3e4e;
+  --text: #f8f8f2;
+  --text-secondary: #8888aa;
+  --border: #44475a;
+  --accent: #bd93f9;
+  --accent-hover: #caa9fa;
+  --code-bg: #21222c;
+}
+
+[data-theme="highcontrast"] {
+  --bg: #ffffff;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f0f0f0;
+  --text: #000000;
+  --text-secondary: #333333;
+  --border: #000000;
+  --accent: #0000ff;
+  --accent-hover: #0000cc;
+  --code-bg: #f0f0f0;
+}
+
+[data-theme="ocean"] {
+  --bg: #eef5ff;
+  --bg-secondary: #dde8f5;
+  --bg-tertiary: #cce0f5;
+  --text: #1a365d;
+  --text-secondary: #4a6a8a;
+  --border: #b0c4de;
+  --accent: #1e6bb8;
+  --accent-hover: #1558a0;
+  --code-bg: #f0f7ff;
+}
+
+[data-theme="matrix"] {
+  --bg: #000000;
+  --bg-secondary: #0a0a0a;
+  --bg-tertiary: #1a1a1a;
+  --text: #00ff41;
+  --text-secondary: #00cc33;
+  --border: #003300;
+  --accent: #00ff41;
+  --accent-hover: #33ff66;
+  --code-bg: #0d0d0d;
+}
+
+[data-theme="starwars"] {
+  --bg: #0d0d1a;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #2a2a3e;
+  --text: #ffd700;
+  --text-secondary: #c0a000;
+  --border: #333355;
+  --accent: #ffd700;
+  --accent-hover: #ffe44d;
+  --code-bg: #1a1a2e;
+}
+
 html, body {
   height: 100%;
   font-family: var(--font-family);
@@ -351,7 +423,10 @@ html, body {
   padding: 0 2px;
 }
 
-[data-theme="dark"] .search-highlight {
+[data-theme="dark"] .search-highlight,
+[data-theme="dracula"] .search-highlight,
+[data-theme="matrix"] .search-highlight,
+[data-theme="starwars"] .search-highlight {
   background: #d4a017;
   color: #000;
 }
@@ -359,6 +434,18 @@ html, body {
 .search-highlight.active {
   background: #ff8c00;
   color: #fff;
+}
+
+/* Theme selector */
+#theme-selector {
+  background: var(--bg-secondary);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 12px;
+  cursor: pointer;
+  height: 28px;
 }
 
 

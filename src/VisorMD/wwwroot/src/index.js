@@ -48,7 +48,7 @@ const searchBar = document.getElementById('search-bar');
 const searchInput = document.getElementById('search-input');
 const searchCount = document.getElementById('search-count');
 const sidebar = document.getElementById('sidebar');
-document.getElementById('btn-theme').addEventListener('click', toggleTheme);
+document.getElementById('theme-selector').addEventListener('change', (e) => setTheme(e.target.value));
 document.getElementById('btn-search').addEventListener('click', toggleSearch);
 document.getElementById('btn-open').addEventListener('click', () => sendToBackend({ type: 'show-open-dialog' }));
 document.getElementById('btn-print').addEventListener('click', printContent);
@@ -87,6 +87,9 @@ function handleBackendMessage(data) {
       break;
     case 'file-changed':
       renderContent(data.content, data.fileName || '', data.filePath || '');
+      break;
+    case 'set-theme':
+      if (data.theme) setTheme(data.theme);
       break;
   }
 }
@@ -204,7 +207,9 @@ function renderContent(content, name, filePath) {
   }
 
   buildToc();
-  updateThemeInMermaid();
+  const curTheme = document.documentElement.getAttribute('data-theme');
+  const isDark = DARK_THEMES.has(curTheme);
+  mermaid.initialize({ theme: isDark ? 'dark' : 'default' });
 }
 
 // ---- TOC ----
@@ -229,23 +234,19 @@ function buildToc() {
 }
 
 // ---- Theme ----
-function toggleTheme() {
-  const theme = document.documentElement.getAttribute('data-theme');
-  const newTheme = theme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('visormd-theme', newTheme);
-  updateThemeInMermaid();
-}
+const DARK_THEMES = new Set(['dark', 'dracula', 'matrix', 'starwars']);
 
-function updateThemeInMermaid() {
-  const theme = document.documentElement.getAttribute('data-theme');
-  mermaid.initialize({ theme: theme === 'dark' ? 'dark' : 'default' });
+function setTheme(name) {
+  document.documentElement.setAttribute('data-theme', name);
+  localStorage.setItem('visormd-theme', name);
+  const isDark = DARK_THEMES.has(name);
+  mermaid.initialize({ theme: isDark ? 'dark' : 'default' });
+  const sel = document.getElementById('theme-selector');
+  if (sel) sel.value = name;
 }
 
 const savedTheme = localStorage.getItem('visormd-theme');
-if (savedTheme) {
-  document.documentElement.setAttribute('data-theme', savedTheme);
-}
+setTheme(savedTheme || 'light');
 
 // ---- Search ----
 let searchMatches = [];

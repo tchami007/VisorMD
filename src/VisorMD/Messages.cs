@@ -6,6 +6,7 @@ namespace VisorMD;
 [JsonSerializable(typeof(FileLoadedMessage))]
 [JsonSerializable(typeof(FileChangedMessage))]
 [JsonSerializable(typeof(FileInfoMessage))]
+[JsonSerializable(typeof(SetThemeMessage))]
 internal partial class AppJsonContext : JsonSerializerContext { }
 
 internal class FileLoadedMessage
@@ -40,4 +41,12 @@ internal class FileInfoMessage
     public string? FilePath { get; set; }
     [JsonPropertyName("fileSize")]
     public long FileSize { get; set; }
+}
+
+internal class SetThemeMessage
+{
+    [JsonPropertyName("type")]
+    public string Type { get; set; } = "set-theme";
+    [JsonPropertyName("theme")]
+    public string? Theme { get; set; }
 }

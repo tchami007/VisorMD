@@ -26,7 +26,7 @@
 **Objetivo:** Herramienta completa para el ecosistema
 
 - [ ] CLI
-- [ ] Temas personalizados
+- [/] Temas personalizados — 8 temas pre-armados + selector UI + CLI (en progreso)
 - [ ] Tabla de contenidos flotante
 - [ ] Mapa del documento
 - [ ] File association / instalador
