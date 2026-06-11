@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VisorMD</title>
+  <link rel="stylesheet" href="dist/bundle.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header">
+      <div id="file-info">
+        <span id="file-name">VisorMD</span>
+        <span id="file-path"></span>
+      </div>
+      <div id="header-controls">
+        <button id="btn-theme" title="Cambiar tema">🌓</button>
+        <button id="btn-search" title="Buscar (Ctrl+F)">🔍</button>
+        <button id="btn-open" title="Abrir archivo">📂</button>
+      </div>
+    </header>
+
+    <div id="main">
+      <aside id="sidebar">
+        <div id="toc-header">
+          <strong>Contenido</strong>
+        </div>
+        <nav id="toc"></nav>
+      </aside>
+
+      <main id="content">
+        <div id="welcome">
+          <h1>VisorMD</h1>
+          <p>Arrastra un archivo <code>.md</code> aquí o usa <strong>📂 Abrir</strong> para empezar.</p>
+          <p>Soporta: GFM, diagramas Mermaid, resaltado de código.</p>
+        </div>
+        <div id="preview" style="display:none"></div>
+      </main>
+    </div>
+
+    <div id="search-bar" style="display:none">
+      <input type="text" id="search-input" placeholder="Buscar en el documento..." autofocus>
+      <span id="search-count"></span>
+      <button id="search-prev">▲</button>
+      <button id="search-next">▼</button>
+      <button id="search-close">✕</button>
+    </div>
+  </div>
+
+  <div id="file-input" style="display:none">
+    <input type="file" id="hidden-file-input" accept=".md,.markdown">
+  </div>
+
+  <script src="dist/bundle.js"></script>
+</body>
+</html>

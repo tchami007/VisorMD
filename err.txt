@@ -1,0 +1,6 @@
+Unhandled exception. System.ArgumentException: The directory name  is invalid. (Parameter 'path')
+   at System.IO.FileSystemWatcher.CheckPathValidity(String) + 0x9c
+   at System.IO.FileSystemWatcher..ctor(String, String) + 0x65
+   at VisorMD.FileWatcher.Watch(String, Action) + 0x8a
+   at VisorMD.Program.<>c__DisplayClass2_0.<Main>b__0(Object, String) + 0x259
+   at VisorMD!<BaseAddress>+0x1171b0

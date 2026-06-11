@@ -1,0 +1,7 @@
+PhotinoX: "PhotinoX".SetTitle(VisorMD)
+PhotinoX: "VisorMD".SetUseOsDefaultSize(False)
+PhotinoX: "VisorMD".SetSize({Width=1200, Height=800})
+PhotinoX: "VisorMD".Center()
+PhotinoX: "VisorMD".SetResizable(True)
+PhotinoX: "VisorMD".Load(C:\Users\cesar\AppData\Local\Temp\VisorMD\wwwroot\index.html)
+PhotinoX: "VisorMD".Load(file:///C:/Users/cesar/AppData/Local/Temp/VisorMD/wwwroot/index.html)

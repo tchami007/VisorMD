@@ -1,0 +1,4 @@
+Unhandled exception. System.InvalidOperationException: SendWebMessage cannot be called until after the Photino window is initialized.
+   at Photino.NET.PhotinoWindow.SendWebMessage(String) + 0xb4
+   at VisorMD.Program.OpenFile(PhotinoWindow, FileService, FileWatcher, String) + 0x10a
+   at VisorMD.Program.Main(String[] args) + 0x14b

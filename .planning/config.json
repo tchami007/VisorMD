@@ -1,0 +1,24 @@
+{
+  "workflow": "gsd",
+  "model_provider": "auto",
+  "model_fast": "auto",
+  "model_think": "auto",
+  "default_mode": "plan-execute-verify",
+  "phase_driven": true,
+  "git": {
+    "auto_commit": false,
+    "conventional_commits": true
+  },
+  "tech_stack": {
+    "language": "C#",
+    "framework": ".NET",
+    "ui": "WebView nativo (WebView2 / WKWebView / WebKitGTK)",
+    "platforms": ["windows", "macos", "linux"],
+    "rendering": {
+      "markdown": "markdown-it",
+      "diagrams": "mermaid.js",
+      "code_highlight": "highlight.js",
+      "math": "KaTeX"
+    }
+  }
+}

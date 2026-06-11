@@ -1,0 +1,17 @@
+# Build outputs
+src/VisorMD/bin/
+src/VisorMD/obj/
+src/.vs/
+
+# Frontend
+src/VisorMD/wwwroot/node_modules/
+src/VisorMD/wwwroot/dist/
+
+# IDE
+*.suo
+*.user
+*.sln.docstates
+
+# OS
+.DS_Store
+Thumbs.db
