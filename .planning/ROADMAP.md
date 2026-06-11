@@ -1,17 +1,17 @@
 # VisorMD — Roadmap
 
-## Fase 1: MVP (Fundación)
+## ✅ Fase 1: MVP (Fundación) — COMPLETADA
 **Objetivo:** Visor funcional cross-platform con GFM + Mermaid
 
-- [ ] Estructura del proyecto .NET + WebView
-- [ ] Ventana principal con WebView embebido
-- [ ] Backend: apertura de archivos, file watcher básico
-- [ ] Frontend: markdown-it + mermaid.js + highlight.js
-- [ ] Tema claro/oscuro
-- [ ] TOC lateral
-- [ ] Búsqueda en-documento
-- [ ] Build para Win, Mac, Linux
-- [ ] Pruebas de humo
+- [x] Estructura del proyecto .NET + WebView
+- [x] Ventana principal con WebView embebido
+- [x] Backend: apertura de archivos, file watcher básico
+- [x] Frontend: markdown-it + mermaid.js + highlight.js
+- [x] Tema claro/oscuro
+- [x] TOC lateral
+- [x] Búsqueda en-documento
+- [x] Build para Win, Mac, Linux
+- [x] Pruebas de humo
 
 ## Fase 2: Productividad
 **Objetivo:** Experiencia pulida para uso diario

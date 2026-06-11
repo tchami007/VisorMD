@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 
 namespace VisorMD;
 
+[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase)]
 [JsonSerializable(typeof(FileLoadedMessage))]
 [JsonSerializable(typeof(FileChangedMessage))]
 [JsonSerializable(typeof(FileInfoMessage))]

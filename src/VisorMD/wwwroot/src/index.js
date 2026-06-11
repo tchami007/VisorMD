@@ -44,6 +44,7 @@ const sidebar = document.getElementById('sidebar');
 document.getElementById('btn-theme').addEventListener('click', toggleTheme);
 document.getElementById('btn-search').addEventListener('click', toggleSearch);
 document.getElementById('btn-open').addEventListener('click', () => sendToBackend({ type: 'show-open-dialog' }));
+document.getElementById('btn-print').addEventListener('click', printContent);
 document.getElementById('hidden-file-input').addEventListener('change', onFileSelected);
 document.getElementById('search-close').addEventListener('click', hideSearch);
 document.getElementById('search-prev').addEventListener('click', () => searchMove(-1));
@@ -58,6 +59,7 @@ searchInput.addEventListener('keydown', (e) => {
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'f') { e.preventDefault(); toggleSearch(); }
   if ((e.ctrlKey || e.metaKey) && e.key === 'o') { e.preventDefault(); document.getElementById('hidden-file-input').click(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'p') { e.preventDefault(); printContent(); }
 });
 
 // Drag and drop
@@ -71,20 +73,6 @@ document.addEventListener('drop', (e) => {
 });
 
 // IPC
-const origReceive = window.external?.receiveMessage;
-window.external = window.external || {};
-window.external.receiveMessage = function(msg) {
-  console.log('receiveMessage called:', msg);
-  try {
-    const data = typeof msg === 'string' ? JSON.parse(msg) : msg;
-    console.log('Parsed data:', data);
-    handleBackendMessage(data);
-  } catch (e) {
-    console.error('IPC error:', e);
-  }
-  origReceive?.(msg);
-};
-
 function handleBackendMessage(data) {
   switch (data.type) {
     case 'file-loaded':
@@ -94,6 +82,28 @@ function handleBackendMessage(data) {
       renderContent(data.content, data.fileName || '', data.filePath || '');
       break;
   }
+}
+
+function receiveMessage(msg) {
+  console.log('receiveMessage called:', msg);
+  try {
+    const data = typeof msg === 'string' ? JSON.parse(msg) : msg;
+    console.log('Parsed data:', data);
+    handleBackendMessage(data);
+  } catch (e) {
+    console.error('IPC error:', e);
+  }
+}
+
+// PhotinoX exposes window.external.receiveMessage(callback) as a registration
+// function — call it with our handler rather than overriding it.
+if (window.external?.sendMessage && window.external?.receiveMessage) {
+  window.external.receiveMessage(function(msg) {
+    receiveMessage(msg);
+  });
+} else {
+  window.external = window.external || {};
+  window.external.receiveMessage = receiveMessage;
 }
 
 function sendToBackend(msg) {
@@ -119,6 +129,35 @@ function sendToBackend(msg) {
     setTimeout(tryAppReady, 500);
   }
 })();
+
+function printContent() {
+  const content = document.getElementById('preview').innerHTML;
+  if (!content) return;
+  const iframe = document.createElement('iframe');
+  iframe.style.cssText = 'position:absolute;width:0;height:0;border:none';
+  document.body.appendChild(iframe);
+  const doc = iframe.contentWindow.document;
+  doc.open();
+  doc.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Imprimir</title><style>' +
+    'body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding:40px;line-height:1.6;color:#1a1a1a}' +
+    'table{border-collapse:collapse;width:100%;margin:12px 0}' +
+    'th,td{border:1px solid #ccc;padding:8px;text-align:left}' +
+    'img{max-width:100%}' +
+    'pre{background:#f5f5f5;padding:16px;border-radius:4px;overflow-x:auto}' +
+    'code{font-family:"SF Mono",Consolas,monospace;background:#f0f0f0;padding:2px 6px;border-radius:3px;font-size:13px}' +
+    'pre code{background:none;padding:0}' +
+    'blockquote{border-left:4px solid #0366d6;padding:8px 16px;margin:12px 0;background:#f5f5f5;color:#666}' +
+    'h1,h2,h3{margin-top:24px}' +
+    'h1{border-bottom:1px solid #ddd;padding-bottom:8px}' +
+    'h2{border-bottom:1px solid #ddd;padding-bottom:6px}' +
+    'a{color:#0366d6}' +
+    '.mermaid svg{max-width:100%}' +
+    '</style></head><body>' + content + '</body></html>');
+  doc.close();
+  iframe.contentWindow.focus();
+  iframe.contentWindow.print();
+  setTimeout(function() { document.body.removeChild(iframe); }, 1000);
+}
 
 function openDroppedFile(file) {
   const reader = new FileReader();

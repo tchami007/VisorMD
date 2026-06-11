@@ -2,6 +2,8 @@
 src/VisorMD/bin/
 src/VisorMD/obj/
 src/.vs/
+dist/
+*.pdb
 
 # Frontend
 src/VisorMD/wwwroot/node_modules/

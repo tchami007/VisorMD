@@ -10,12 +10,18 @@ public class FileWatcher
     {
         Stop();
 
+        if (string.IsNullOrEmpty(path))
+            return;
+
         try
         {
             var directory = Path.GetDirectoryName(path);
             var fileName = Path.GetFileName(path);
 
             if (string.IsNullOrEmpty(directory) || string.IsNullOrEmpty(fileName))
+                return;
+
+            if (!Directory.Exists(directory))
                 return;
 
             _watchedPath = path;

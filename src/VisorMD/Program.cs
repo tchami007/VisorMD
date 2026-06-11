@@ -97,11 +97,8 @@ class Program
     static string ExtractWwwroot()
     {
         var targetDir = Path.Combine(Path.GetTempPath(), "VisorMD", "wwwroot");
-        var marker = Path.Combine(targetDir, ".extracted");
         var asm = Assembly.GetExecutingAssembly();
         var prefix = typeof(Program).Assembly.GetName().Name + ".wwwroot.";
-
-        if (File.Exists(marker)) return targetDir;
 
         if (Directory.Exists(targetDir))
             Directory.Delete(targetDir, true);
@@ -127,7 +124,6 @@ class Program
             stream.CopyTo(fileStream);
         }
 
-        File.WriteAllText(marker, DateTime.UtcNow.ToString("O"));
         return targetDir;
     }
 
