@@ -1,6 +1,5 @@
 ﻿using System.Drawing;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Text.Json;
 using Photino.NET;
 
@@ -8,14 +7,6 @@ namespace VisorMD;
 
 class Program
 {
-    [DllImport("kernel32.dll")]
-    static extern bool FreeConsole();
-
-    static void PrintToConsole(string msg)
-    {
-        Console.Error.WriteLine(msg);
-    }
-
     static string? s_wwwrootPath;
     static string? s_pendingFile;
     static string? s_pendingTheme;
@@ -29,19 +20,21 @@ class Program
 
     static void PrintUsage()
     {
-        PrintToConsole("VisorMD - Visor de documentos Markdown\n" +
-            "\n" +
-            "Uso: visormd [opciones] <archivo.md>\n" +
-            "\n" +
-            "Opciones:\n" +
-            "  --theme <claro|oscuro>  Tema inicial\n" +
-            "  --print                 Abrir dialogo de impresion al cargar\n" +
-            "  --help, -h              Mostrar esta ayuda\n" +
-            "\n" +
-            "Ejemplos:\n" +
-            "  visormd documento.md\n" +
-            "  visormd --theme oscuro documento.md\n" +
-            "  visormd --print documento.md\n");
+        Console.Error.WriteLine("""
+            VisorMD — Visor de documentos Markdown
+
+            Uso: visormd [opciones] <archivo.md>
+
+            Opciones:
+              --theme <claro|oscuro>  Tema inicial
+              --print                 Abrir diálogo de impresión al cargar
+              --help, -h              Mostrar esta ayuda
+
+            Ejemplos:
+              visormd documento.md
+              visormd --theme oscuro documento.md
+              visormd --print documento.md
+            """);
     }
 
     [STAThread]
@@ -85,7 +78,7 @@ class Program
             s_pendingFile = positional[0];
             if (!File.Exists(s_pendingFile))
             {
-                PrintToConsole($"Error: archivo no encontrado: {s_pendingFile}\n");
+                Console.Error.WriteLine($"Error: archivo no encontrado: {s_pendingFile}");
                 Environment.Exit(1);
             }
         }
@@ -94,8 +87,6 @@ class Program
 
         var fileService = new FileService();
         var fileWatcher = new FileWatcher();
-
-        FreeConsole();
 
         PhotinoWindow? window = null;
         window = new PhotinoWindow()
