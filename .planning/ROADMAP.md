@@ -25,8 +25,8 @@
 ## Fase 3: Madurez
 **Objetivo:** Herramienta completa para el ecosistema
 
-- [ ] CLI
-- [ ] Temas personalizados
-- [ ] Tabla de contenidos flotante
-- [ ] Mapa del documento
-- [ ] File association / instalador
+- [x] CLI (Wave 1)
+- [ ] Temas personalizados (Wave 2)
+- [ ] Tabla de contenidos flotante (Wave 3)
+- [ ] Mapa del documento (Wave 4)
+- [x] File association / instalador (Wave 5)
