@@ -17,9 +17,9 @@
 **Objetivo:** Experiencia pulida para uso diario
 
 - [ ] Live reload automático
-- [x] Exportación PDF / Impresión
+- [ ] Exportación PDF
 - [ ] Pestañas múltiples
-- [x] KaTeX (fórmulas matemáticas)
+- [ ] KaTeX (fórmulas matemáticas)
 - [ ] Barra de progreso de lectura
 
 ## Fase 3: Madurez

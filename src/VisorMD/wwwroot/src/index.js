@@ -88,19 +88,6 @@ function handleBackendMessage(data) {
     case 'file-changed':
       renderContent(data.content, data.fileName || '', data.filePath || '');
       break;
-    case 'set-theme':
-      if (data.theme === 'oscuro' || data.theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('visormd-theme', 'dark');
-      } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('visormd-theme', 'light');
-      }
-      updateThemeInMermaid();
-      break;
-    case 'trigger-print':
-      printContent();
-      break;
   }
 }
 

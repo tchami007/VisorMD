@@ -9,8 +9,6 @@ class Program
 {
     static string? s_wwwrootPath;
     static string? s_pendingFile;
-    static string? s_pendingTheme;
-    static bool s_pendingPrint;
     static string s_logPath = Path.Combine(Path.GetTempPath(), "VisorMD.log");
 
     static void Log(string msg)
@@ -18,72 +16,13 @@ class Program
         File.AppendAllText(s_logPath, $"[{DateTime.Now:HH:mm:ss}] {msg}\n");
     }
 
-    static void PrintUsage()
-    {
-        Console.Error.WriteLine("""
-            VisorMD — Visor de documentos Markdown
-
-            Uso: visormd [opciones] <archivo.md>
-
-            Opciones:
-              --theme <claro|oscuro>  Tema inicial
-              --print                 Abrir diálogo de impresión al cargar
-              --help, -h              Mostrar esta ayuda
-
-            Ejemplos:
-              visormd documento.md
-              visormd --theme oscuro documento.md
-              visormd --print documento.md
-            """);
-    }
-
     [STAThread]
     static void Main(string[] args)
     {
         File.WriteAllText(s_logPath, $"=== VisorMD started {DateTime.Now} ===\n");
         Log($"Args: {string.Join(", ", args)}");
-
-        // Parse CLI arguments
-        var positional = new List<string>();
-        for (int i = 0; i < args.Length; i++)
-        {
-            switch (args[i])
-            {
-                case "--help":
-                case "-h":
-                    PrintUsage();
-                    return;
-
-                case "--theme":
-                    if (i + 1 < args.Length)
-                    {
-                        i++;
-                        s_pendingTheme = args[i];
-                    }
-                    break;
-
-                case "--print":
-                    s_pendingPrint = true;
-                    break;
-
-                default:
-                    if (!args[i].StartsWith("--"))
-                        positional.Add(args[i]);
-                    break;
-            }
-        }
-
-        if (positional.Count > 0)
-        {
-            s_pendingFile = positional[0];
-            if (!File.Exists(s_pendingFile))
-            {
-                Console.Error.WriteLine($"Error: archivo no encontrado: {s_pendingFile}");
-                Environment.Exit(1);
-            }
-        }
-
         s_wwwrootPath = ExtractWwwroot();
+        s_pendingFile = args.Length > 0 ? args[0] : null;
 
         var fileService = new FileService();
         var fileWatcher = new FileWatcher();
@@ -107,24 +46,12 @@ class Program
                 switch (type)
                 {
                     case "app-ready":
-                        if (s_pendingTheme != null)
-                        {
-                            var themeMsg = JsonSerializer.Serialize(
-                                new SetThemeMessage { Theme = s_pendingTheme },
-                                AppJsonContext.Default.SetThemeMessage);
-                            w.SendWebMessage(themeMsg);
-                        }
                         if (s_pendingFile != null && File.Exists(s_pendingFile))
                         {
                             var fullPath = Path.GetFullPath(s_pendingFile);
                             Console.Error.WriteLine($"Opening pending file: {fullPath}");
                             OpenFile(w, fileService, fileWatcher, fullPath);
                             s_pendingFile = null;
-                            if (s_pendingPrint)
-                            {
-                                w.SendWebMessage("{\"type\":\"trigger-print\"}");
-                                s_pendingPrint = false;
-                            }
                         }
                         break;
 
