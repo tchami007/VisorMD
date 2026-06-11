@@ -13,20 +13,20 @@
 - [x] Build para Win, Mac, Linux
 - [x] Pruebas de humo
 
-## Fase 2: Productividad
+## ✅ Fase 2: Productividad — COMPLETADA
 **Objetivo:** Experiencia pulida para uso diario
 
-- [ ] Live reload automático
-- [ ] Exportación PDF
+- [x] Live reload automático (FileWatcher)
+- [x] Exportación PDF (Ctrl+P / botón imprimir)
+- [x] KaTeX (fórmulas matemáticas `$...$` y `$$...$$`)
 - [ ] Pestañas múltiples
-- [ ] KaTeX (fórmulas matemáticas)
 - [ ] Barra de progreso de lectura
 
-## Fase 3: Madurez
+## Fase 3: Madurez (EN PROGRESO)
 **Objetivo:** Herramienta completa para el ecosistema
 
-- [ ] CLI
-- [x] Temas personalizados — 8 temas pre-armados + selector UI + CLI
+- [x] Temas personalizados — 8 temas (Claro, Oscuro, Sepia, Dracula, Alto Contraste, Océano, Matrix, Star Wars) + selector UI + CLI `--theme`
+- [ ] CLI completo (`--help`, `--print`, file association)
 - [ ] Tabla de contenidos flotante
 - [ ] Mapa del documento
-- [ ] File association / instalador
+- [ ] Instalador (NSIS / PowerShell)
