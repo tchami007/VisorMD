@@ -19,8 +19,8 @@
 - [x] Live reload automático (FileWatcher)
 - [x] Exportación PDF (Ctrl+P / botón imprimir)
 - [x] KaTeX (fórmulas matemáticas `$...$` y `$$...$$`)
-- [ ] Pestañas múltiples
-- [ ] Barra de progreso de lectura
+- [x] Pestañas múltiples (Ctrl+TAB, Ctrl+W, click medio cerrar)
+- [x] Barra de progreso de lectura
 
 ## Fase 3: Madurez (EN PROGRESO)
 **Objetivo:** Herramienta completa para el ecosistema
@@ -29,4 +29,4 @@
 - [ ] CLI completo (`--help`, `--print`, file association)
 - [ ] Tabla de contenidos flotante
 - [ ] Mapa del documento
-- [ ] Instalador (NSIS / PowerShell)
+- [x] Instalador (PowerShell + script NSIS) — `scripts/install.ps1` (sin dependencias) + `scripts/setup.nsi` (requiere NSIS) + `scripts/build.ps1`

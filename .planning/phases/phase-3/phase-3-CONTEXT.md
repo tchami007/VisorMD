@@ -14,13 +14,13 @@ This phase delivers the remaining VisorMD maturity features: full CLI (--help), 
 ## Implementation Decisions
 
 ### CLI Design
-- **D-01:** Keep current `FreeConsole()` behavior — app always opens as GUI window. No dual-mode (no separate console/CLI mode).
-- **D-02:** Only add `--help` flag. No `--version`, no `--print` flag (printing remains Ctrl+P / print button only).
-- **D-03:** `--help` output in Spanish, concise — usage line + available flags. One-page output.
-- **D-04:** Existing `--theme` and positional file arg behavior unchanged.
+- **D-01 [informational]:** Keep current `FreeConsole()` behavior — app always opens as GUI window. No dual-mode (no separate console/CLI mode).
+- **D-02 [informational]:** Only add `--help` flag. No `--version`, no `--print` flag (printing remains Ctrl+P / print button only).
+- **D-03 [informational]:** `--help` output in Spanish, concise — usage line + available flags. One-page output.
+- **D-04 [informational]:** Existing `--theme` and positional file arg behavior unchanged.
 
 ### Document Map
-- **D-05:** Simplest approach — enhance existing sidebar TOC (`#toc`) with hierarchy/indentation by heading level (`h1`, `h2`, `h3`, `h4`). No separate panel, no floating overlay for the map. The TOC already works at the sidebar level — just nest it.
+- **D-05 [informational]:** Simplest approach — enhance existing sidebar TOC (`#toc`) with hierarchy/indentation by heading level (`h1`, `h2`, `h3`, `h4`). No separate panel, no floating overlay for the map. The TOC already works at the sidebar level — just nest it.
 
 ### Claude's Discretion
 - **Floating TOC** — not discussed; planner to decide simplest approach (floating button, collapsible toggle, or enhancement to sidebar).
