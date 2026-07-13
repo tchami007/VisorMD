@@ -29,6 +29,10 @@ internal class FileChangedMessage
     public string Type { get; set; } = "file-changed";
     [JsonPropertyName("content")]
     public string? Content { get; set; }
+    [JsonPropertyName("fileName")]
+    public string? FileName { get; set; }
+    [JsonPropertyName("filePath")]
+    public string? FilePath { get; set; }
 }
 
 internal class FileInfoMessage
