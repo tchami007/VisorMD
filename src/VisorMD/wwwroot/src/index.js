@@ -70,7 +70,7 @@ searchInput.addEventListener('keydown', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if ((e.ctrlKey || e.metaKey) && e.key === 'f') { e.preventDefault(); toggleSearch(); }
-  if ((e.ctrlKey || e.metaKey) && e.key === 'o') { e.preventDefault(); document.getElementById('hidden-file-input').click(); }
+  if ((e.ctrlKey || e.metaKey) && e.key === 'o') { e.preventDefault(); sendToBackend({ type: 'show-open-dialog' }); }
   if ((e.ctrlKey || e.metaKey) && e.key === 'p') { e.preventDefault(); printContent(); }
   if ((e.ctrlKey || e.metaKey) && e.key === 'w') { e.preventDefault(); if (activeTabId) closeTab(activeTabId); }
   if ((e.ctrlKey || e.metaKey) && e.key === 'Tab') {
@@ -80,6 +80,15 @@ document.addEventListener('keydown', (e) => {
     const dir = e.shiftKey ? -1 : 1;
     const next = tabs[(idx + dir + tabs.length) % tabs.length];
     switchTab(next.id);
+  }
+});
+
+// Close button click
+tabList.addEventListener('click', (e) => {
+  const closeBtn = e.target.closest('.tab-close');
+  if (closeBtn) {
+    e.stopPropagation();
+    closeTab(parseInt(closeBtn.dataset.tabId));
   }
 });
 
