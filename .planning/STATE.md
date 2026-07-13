@@ -1,57 +1,47 @@
 ---
 gsd_state_version: 1.0
 milestone: v1.0
-milestone_name: milestone
-status: unknown
-stopped_at: Phase 3 context gathered
-last_updated: "2026-07-13T15:01:50.131Z"
-progress:
-  total_phases: 2
-  completed_phases: 1
-  total_plans: 2
-  completed_plans: 1
-  percent: 50
+milestone_name: Primer lanzamiento
+status: complete
+last_updated: "2026-07-13T15:30:00.000Z"
 ---
 
 # STATE.md — VisorMD
 
-**Última actualización:** 2026-06-12
+**Última actualización:** 2026-07-13
 
 ## Estado actual
 
-- ✅ Fase 1 (MVP) completada
-- ✅ Fase 2 (Productividad) completada
-- 🔶 Fase 3 (Madurez) en progreso
+- ✅ **v1.0 shipped** — 3 fases completadas (MVP + Productividad + Madurez)
+- Build self-contained win-x64 publicado en `dist/VisorMD/`
 
-## Decisiones registradas
+## Fase 1: MVP
 
-- Se eligió .NET + WebView sobre Rust/egui por perfil del equipo (C#)
-- Se eligió WebView nativo sobre Electron por tamaño y rendimiento
-- Se prioriza viewer-first (sin modo edición)
-- Se usó PhotinoX como wrapper cross-platform de WebView
-
-## Fase 1 completada
-
-- Solución .NET 9 con PhotinoX
+- Solución .NET con PhotinoX
 - Backend: Program.cs, FileService, FileWatcher
-- Frontend: markdown-it + mermaid.js + highlight.js
+- Frontend: markdown-it + mermaid.js + highlight.js + KaTeX
 - TOC lateral, tema claro/oscuro, búsqueda Ctrl+F
 - Build scripts para Win/Mac/Linux
 
-## Fase 2 completada
+## Fase 2: Productividad
 
 - Live reload automático (FileWatcher)
 - Exportación PDF (Ctrl+P)
 - KaTeX (fórmulas matemáticas)
-- **Pestañas múltiples** — Ctrl+TAB para cambiar, Ctrl+W para cerrar, click medio para cerrar
-- **Barra de progreso de lectura** — indicador visual en la parte superior del contenido
+- Pestañas múltiples — Ctrl+TAB, Ctrl+W, click medio cerrar
+- Barra de progreso de lectura
 
-## Fase activa
+## Fase 3: Madurez
 
-- Fase 3 (Madurez): Temas (completado), CLI, TOC flotante, mapa del documento, instalador
+- 8 temas visuales + selector UI + CLI `--theme`
+- CLI `--help` / `-h` en español
+- TOC jerárquico (h1-h4 con nesting)
+- TOC flotante responsive (≤800px)
+- Scripts instalación: install-mac.sh, install-linux.sh, install.ps1, setup.nsi
+- Fix: cerrar pestaña con ×, Ctrl+O respeta última carpeta
 
-## Session
+## Quick Tasks Completed
 
-**Last session:** 2026-07-13T15:01:50.125Z
-**Stopped at:** Phase 3 context gathered
-**Resume file:** .planning/phases/phase-3/phase-3-CONTEXT.md
+| Date | Task |
+|------|------|
+| 2026-07-13 | fix-close-tab-lastdir — Cerrar pestaña con × + Ctrl+O última carpeta |
