@@ -29,6 +29,11 @@
       </div>
     </header>
 
+    <div id="tab-bar">
+      <div id="tab-list"></div>
+      <button id="btn-new-tab" title="Abrir archivo en nueva pestaña">+</button>
+    </div>
+
     <div id="main">
       <aside id="sidebar">
         <div id="toc-header">
@@ -38,12 +43,15 @@
       </aside>
 
       <main id="content">
+        <div id="reading-progress"></div>
         <div id="welcome">
           <h1>VisorMD</h1>
           <p>Arrastra un archivo <code>.md</code> aquí o usa <strong>📂 Abrir</strong> para empezar.</p>
           <p>Soporta: GFM, diagramas Mermaid, resaltado de código.</p>
         </div>
-        <div id="preview" style="display:none"></div>
+        <div id="tab-content-container">
+          <div id="preview" style="display:none"></div>
+        </div>
       </main>
     </div>
 
@@ -60,6 +68,7 @@
     <input type="file" id="hidden-file-input" accept=".md,.markdown">
   </div>
 
+  <button id="btn-toc-toggle" title="Tabla de contenidos">☰</button>
   <script src="dist/bundle.js"></script>
 </body>
 </html>

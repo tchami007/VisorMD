@@ -177,6 +177,119 @@ html, body {
   background: var(--bg-tertiary);
 }
 
+/* Tab bar */
+#tab-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border);
+  min-height: 32px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  user-select: none;
+}
+
+#tab-list {
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 0;
+  border-bottom: 2px solid transparent;
+}
+
+.tab-btn:hover {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.tab-btn.active {
+  background: var(--bg);
+  color: var(--text);
+  border-bottom-color: var(--accent);
+}
+
+.tab-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.tab-close {
+  font-size: 14px;
+  line-height: 1;
+  color: var(--text-secondary);
+  padding: 0 2px;
+  border-radius: 2px;
+}
+
+.tab-close:hover {
+  background: var(--bg-tertiary);
+  color: var(--text);
+}
+
+#btn-new-tab {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 18px;
+  padding: 4px 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+#btn-new-tab:hover {
+  color: var(--text);
+  background: var(--bg);
+}
+
+/* Tab content */
+#tab-content-container {
+  flex: 1;
+  min-height: 0;
+}
+
+.tab-content {
+  display: none;
+  padding: 32px 40px 64px;
+  max-width: 840px;
+  margin: 0 auto;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Reading progress */
+#reading-progress {
+  position: sticky;
+  top: 0;
+  height: 3px;
+  background: transparent;
+  z-index: 10;
+}
+
+#reading-progress::after {
+  content: '';
+  display: block;
+  height: 100%;
+  width: var(--progress, 0%);
+  background: var(--accent);
+  transition: width 0.1s ease-out;
+}
+
 /* Main layout */
 #main {
   display: flex;
@@ -208,44 +321,36 @@ html, body {
   padding: 8px 0;
 }
 
+.toc-tree { list-style: none; padding: 0; margin: 0; }
+.toc-tree ul { list-style: none; padding-left: 16px; }
 .toc-item {
-  display: block;
-  padding: 4px 12px;
-  font-size: 13px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  text-decoration: none;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  display: block; padding: 4px 12px; font-size: 13px;
+  color: var(--text-secondary); cursor: pointer;
+  text-decoration: none; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
   border-left: 2px solid transparent;
 }
-
-.toc-item:hover {
-  color: var(--accent);
-  background: var(--bg-tertiary);
+.toc-item:hover { color: var(--accent); background: var(--bg-tertiary); }
+.toc-item.active { color: var(--accent); border-left-color: var(--accent); }
+.toc-section { margin: 0; }
+.toc-section summary {
+  cursor: pointer; font-size: 12px; color: var(--text-secondary);
+  padding: 2px 8px; user-select: none; list-style: none;
 }
-
-.toc-item.active {
-  color: var(--accent);
-  border-left-color: var(--accent);
-}
-
-.toc-h1 { padding-left: 12px; font-weight: 600; }
-.toc-h2 { padding-left: 24px; }
-.toc-h3 { padding-left: 36px; }
-.toc-h4 { padding-left: 48px; font-size: 12px; }
+.toc-section summary:hover { color: var(--accent); }
+.toc-section summary::-webkit-details-marker { display: none; }
+.toc-section[open] > summary { margin-bottom: 2px; }
 
 /* Content */
 #content {
   flex: 1;
   overflow-y: auto;
-  padding: 32px 40px;
+  position: relative;
 }
 
 #welcome {
   text-align: center;
-  margin-top: 80px;
+  padding: 80px 40px 40px;
   color: var(--text-secondary);
 }
 
@@ -267,22 +372,23 @@ html, body {
   font-size: 13px;
 }
 
+.tab-content,
 #preview {
   max-width: 840px;
   margin: 0 auto;
 }
 
 /* Markdown content styling */
-#preview h1 { font-size: 28px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-#preview h2 { font-size: 22px; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
-#preview h3 { font-size: 18px; margin: 16px 0 8px; }
-#preview h4 { font-size: 16px; margin: 12px 0 6px; }
-#preview h5, #preview h6 { font-size: 14px; margin: 10px 0 6px; }
+.tab-content h1, #preview h1 { font-size: 28px; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.tab-content h2, #preview h2 { font-size: 22px; margin: 20px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.tab-content h3, #preview h3 { font-size: 18px; margin: 16px 0 8px; }
+.tab-content h4, #preview h4 { font-size: 16px; margin: 12px 0 6px; }
+.tab-content h5, .tab-content h6, #preview h5, #preview h6 { font-size: 14px; margin: 10px 0 6px; }
 
-#preview p { margin-bottom: 12px; }
-#preview ul, #preview ol { margin-bottom: 12px; padding-left: 24px; }
-#preview li { margin-bottom: 4px; }
-#preview blockquote {
+.tab-content p, #preview p { margin-bottom: 12px; }
+.tab-content ul, .tab-content ol, #preview ul, #preview ol { margin-bottom: 12px; padding-left: 24px; }
+.tab-content li, #preview li { margin-bottom: 4px; }
+.tab-content blockquote, #preview blockquote {
   margin: 12px 0;
   padding: 8px 16px;
   border-left: 4px solid var(--accent);
@@ -290,7 +396,7 @@ html, body {
   color: var(--text-secondary);
 }
 
-#preview code {
+.tab-content code, #preview code {
   font-family: var(--font-mono);
   background: var(--code-bg);
   padding: 2px 6px;
@@ -298,7 +404,7 @@ html, body {
   font-size: 13px;
 }
 
-#preview pre {
+.tab-content pre, #preview pre {
   margin: 12px 0;
   padding: 16px;
   background: var(--code-bg);
@@ -306,67 +412,57 @@ html, body {
   overflow-x: auto;
 }
 
-#preview pre code {
+.tab-content pre code, #preview pre code {
   background: none;
   padding: 0;
   font-size: 13px;
   line-height: 1.5;
 }
 
-#preview table {
+.tab-content table, #preview table {
   width: 100%;
   border-collapse: collapse;
   margin: 12px 0;
 }
 
-#preview th, #preview td {
+.tab-content th, .tab-content td, #preview th, #preview td {
   padding: 8px 12px;
   border: 1px solid var(--border);
   text-align: left;
 }
 
-#preview th {
+.tab-content th, #preview th {
   background: var(--bg-secondary);
   font-weight: 600;
 }
 
-#preview img {
+.tab-content img, #preview img {
   max-width: 100%;
   border-radius: 4px;
 }
 
-#preview a {
+.tab-content a, #preview a {
   color: var(--accent);
   text-decoration: none;
 }
 
-#preview a:hover {
+.tab-content a:hover, #preview a:hover {
   text-decoration: underline;
 }
 
-#preview hr {
+.tab-content hr, #preview hr {
   margin: 24px 0;
   border: none;
   border-top: 1px solid var(--border);
 }
 
-#preview input[type="checkbox"] {
+.tab-content input[type="checkbox"], #preview input[type="checkbox"] {
   margin-right: 6px;
 }
 
-#preview .task-list-item {
+.tab-content .task-list-item, #preview .task-list-item {
   list-style: none;
   margin-left: -24px;
-}
-
-/* Mermaid diagrams */
-.mermaid {
-  margin: 16px 0;
-  text-align: center;
-}
-
-.mermaid svg {
-  max-width: 100%;
 }
 
 /* Search bar */
@@ -434,6 +530,42 @@ html, body {
 .search-highlight.active {
   background: #ff8c00;
   color: #fff;
+}
+
+/* Mermaid diagrams */
+.mermaid {
+  margin: 16px 0;
+  text-align: center;
+}
+
+.mermaid svg {
+  max-width: 100%;
+}
+
+/* Floating TOC toggle */
+#btn-toc-toggle {
+  position: fixed; bottom: 20px; right: 20px;
+  z-index: 1000; width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--accent); color: #fff; border: none;
+  font-size: 20px; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  display: none;
+  transition: transform 0.15s ease;
+}
+#btn-toc-toggle:hover { transform: scale(1.1); }
+#btn-toc-toggle:active { transform: scale(0.95); }
+
+@media (max-width: 800px) {
+  #btn-toc-toggle { display: block; }
+  #sidebar {
+    position: fixed; top: 0; left: -280px;
+    width: 260px; height: 100vh; z-index: 999;
+    transition: left 0.25s ease;
+    box-shadow: 2px 0 12px rgba(0,0,0,0.3);
+  }
+  #sidebar.open { left: 0; }
+  #sidebar.open ~ #content { opacity: 0.6; transition: opacity 0.25s ease; }
 }
 
 /* Theme selector */

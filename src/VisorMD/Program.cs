@@ -19,6 +19,7 @@ class Program
     static string? s_wwwrootPath;
     static string? s_pendingFile;
     static string? s_pendingTheme;
+    static string? s_lastDirectory;
     static string s_logPath = Path.Combine(Path.GetTempPath(), "VisorMD.log");
 
     static void Log(string msg)
@@ -55,6 +56,21 @@ class Program
                         Console.Error.WriteLine("Error: --theme requiere un nombre de tema.");
                         Environment.Exit(1);
                     }
+                    break;
+
+                case "--help":
+                case "-h":
+                    Console.WriteLine(@"VisorMD — Visor de archivos Markdown
+Uso: visormd [opciones] [archivo]
+
+Opciones:
+  --theme <tema>    Tema visual (light, dark, sepia, dracula, highcontrast, ocean, matrix, starwars)
+  --help, -h        Muestra esta ayuda
+
+Ejemplos:
+  visormd documento.md
+  visormd --theme dracula guia.md");
+                    Environment.Exit(0);
                     break;
 
                 default:
@@ -123,12 +139,12 @@ class Program
                         break;
 
                     case "show-open-dialog":
-                        Log("show-open-dialog handler started");
+                        Log($"show-open-dialog handler started, lastDir={s_lastDirectory}");
                         try
                         {
                             var selected = w.ShowOpenFile(
                                 title: "Seleccionar archivo Markdown",
-                                defaultPath: null,
+                                defaultPath: s_lastDirectory,
                                 multiSelect: false,
                                 filters: new[] { ("Markdown files", new[] { "*.md", "*.markdown" }) }
                             );
@@ -198,6 +214,10 @@ class Program
             return;
         }
 
+        var dir = Path.GetDirectoryName(Path.GetFullPath(path));
+        if (dir != null) s_lastDirectory = dir;
+        Log($"Last directory set to: {s_lastDirectory}");
+
         var content = fileService.ReadFile(path);
         var info = fileService.GetFileInfo(path);
         Log($"File read OK: {info.Name}, size={info.Size}");
@@ -215,12 +235,15 @@ class Program
         Log("WebMessage sent");
         window.SetTitle($"VisorMD - {info.Name}");
 
+        var fileName = info.Name;
         fileWatcher.Watch(path, () =>
         {
             var newContent = fileService.ReadFile(path);
             var reloadMsg = JsonSerializer.Serialize(new FileChangedMessage
             {
-                Content = newContent
+                Content = newContent,
+                FileName = fileName,
+                FilePath = path
             }, AppJsonContext.Default.FileChangedMessage);
             window.SendWebMessage(reloadMsg);
         });
